@@ -1,2 +1,4 @@
-﻿  BattleShip.cpp
-  BattleShip.vcxproj -> C:\Users\konio\OneDrive\Pulpit\ELEKTRONIK\2sem\JP\BattleShip\x64\Debug\BattleShip.exe
+﻿  Board.cpp
+  ShipTypes.cpp
+  Generating Code...
+  BattleShip.vcxproj -> C:\Users\PC\Source\Repos\BattleShip\x64\Debug\BattleShip.exe

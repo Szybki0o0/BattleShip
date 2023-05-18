@@ -38,17 +38,17 @@ int main()
     ShipTypes fours("one", 4, 3);
 
 
-    board1.createBoard(board1.getBoard());
-    board1.createSecBoard(board1.getSecBoard());
+    //board1.createBoard(board1.getBoard());
+    //board1.createSecBoard(board1.getSecBoard());
 
-    board2.createBoard(board2.getBoard());
-    board2.createSecBoard(board2.getSecBoard());
+    //board2.createBoard(board2.getBoard());
+    //board2.createSecBoard(board2.getSecBoard());
 
     player1.setTurn(true);
 
     //ones.ones(1, 2, board1.getSecBoard());
     //board1.printBoard(ones.ones("c4", board1.getSecBoard()));
-    board1.printBoard(twos.twos("c4c3", board1.getSecBoard()));
+    //board1.printBoard(twos.twos("c4c3", board1.getSecBoard()));
  
     for (;;)
     {
@@ -57,7 +57,7 @@ int main()
 
         if (player1.getTurn())
         {
-            //board1.printBoard(board1.getBoard());
+            board1.printBoard();
             string exp;
             int x{}, y{};
             cout << player1.getName() << " guess: ";
@@ -66,7 +66,7 @@ int main()
             {
                 if (size(exp) == 3) { x = 9; y = int(exp[0]) - 97; }
                 else { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                board1.changeMatrix(x, y, board1.getBoard(), board1.getSecBoard());
+                //board1.changeMatrix(x, y, board1.getBoard(), board1.getSecBoard());
                 player1.setTurn(false);
                 player2.setTurn(true);
             }
@@ -84,7 +84,7 @@ int main()
             {
                 if (size(exp) == 3) { x = 9; y = int(exp[0]) - 97; }
                 else { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                board2.changeMatrix(x, y, board2.getBoard(), board2.getSecBoard());
+                //board2.changeMatrix(x, y, board2.getBoard(), board2.getSecBoard());
                 player1.setTurn(true);
                 player2.setTurn(false);
             }
