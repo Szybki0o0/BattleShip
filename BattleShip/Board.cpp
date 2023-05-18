@@ -23,25 +23,7 @@ public:
 	void setBoard(vector<vector<char>> board) { fboard = board; }
 	void setSecBoard(vector<vector<char>> secBoard) { fsecBoard = secBoard; }
 
-	vector<vector<char>> createBoard(vector<vector<char>> board)
-	{
-		board.resize(getDim());
-		for (int i = 0; i < getDim(); i++)
-		{
-			board[i].resize(getDim());
-		}
-		for (int i = 0; i < size(board); i++)
-		{
-			for (int j = 0; j < size(board); j++)
-			{
-				board[i][j] = 'X';
-			}
-		}
-		setBoard(board);
-		return board;
-	}
-
-	vector<vector<char>> createSecBoard(vector<vector<char>> board)
+	void createBoard(vector<vector<char>> board)
 	{
 		board.resize(getDim());
 		for (int i = 0; i < getDim(); i++)
@@ -56,7 +38,23 @@ public:
 			}
 		}
 		setBoard(board);
-		return board;
+	}
+
+	void createSecBoard(vector<vector<char>> board)
+	{
+		board.resize(getDim());
+		for (int i = 0; i < getDim(); i++)
+		{
+			board[i].resize(getDim());
+		}
+		for (int i = 0; i < size(board); i++)
+		{
+			for (int j = 0; j < size(board); j++)
+			{
+				board[i][j] = '#';
+			}
+		}
+		setSecBoard(board);
 	}
 
 	void printBoard(vector<vector<char>> board)
@@ -87,8 +85,24 @@ public:
 		cout << "\n\n";
 	}
 
-	char whatsHappening(int x, int y, vector<vector<char>> board)
+	void changeMatrix(int x, int y, vector<vector<char>> board, vector<vector<char>> secBoard)
 	{
+		if (secBoard[x][y] == 'H') board[x][y] = 'X';
+		else if (secBoard[x][y] == '#') board[x][y] = 'o';
+		else cout << "Unknown sign";
+		setBoard(board);
+		setSecBoard(secBoard);
+	}
 
+	bool isEnd(vector<vector<char>> secBoard)
+	{
+		for (auto i : secBoard)
+		{
+			for (auto j : i)
+			{
+				if (j == 'H') return false;
+			}
+		}
+		return true;
 	}
 };
