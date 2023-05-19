@@ -1,2 +1,7 @@
 .vs
+<<<<<<< HEAD
 x64/Debug
+=======
+x64
+BattleShip\x64
+>>>>>>> 66e573398780583e1ba313e39f927a52724fba1e

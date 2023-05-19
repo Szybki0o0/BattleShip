@@ -8,56 +8,39 @@ class Board
 private:
 	int fid{}, fdim{};
 	vector<vector<char>> fboard;
-	vector<vector<char>> fsecBoard;
 public:
-	Board(int id, vector<vector<char>> board = {}, vector<vector<char>> secBoard = {}, int dim = 10) : 
-	fid{ id }, fdim{ dim }, fboard{ board }, fsecBoard{ secBoard }
+	Board(int id, int dim = 10) :
+	fid{ id }, fdim{ dim }, fboard{ createBoardField() }
 	{}
 
 	int getId(void) const { return fid; }
 	int getDim(void) const { return fdim; }
-	vector<vector<char>> getBoard(void) const { return fboard; }
-	vector<vector<char>> getSecBoard(void) const { return fsecBoard; }
+	vector<vector<char>> getBoardField(void) { return fboard; }
 
 	void setId(int id) { fid = id; }
 	void setBoard(vector<vector<char>> board) { fboard = board; }
-	void setSecBoard(vector<vector<char>> secBoard) { fsecBoard = secBoard; }
 
-	void createBoard(vector<vector<char>> board)
+	vector<vector<char>> createBoardField()
 	{
-		board.resize(getDim());
+		vector<vector<char>> fboard;
+		fboard.resize(getDim());
+
 		for (int i = 0; i < getDim(); i++)
 		{
-			board[i].resize(getDim());
+			fboard[i].resize(getDim());
 		}
-		for (int i = 0; i < size(board); i++)
+		for (int i = 0; i < size(fboard); i++)
 		{
-			for (int j = 0; j < size(board); j++)
+			for (int j = 0; j < size(fboard); j++)
 			{
-				board[i][j] = '#';
+				fboard[i][j] = 'Z';
 			}
 		}
-		setBoard(board);
+	
+		return fboard;
 	}
 
-	void createSecBoard(vector<vector<char>> board)
-	{
-		board.resize(getDim());
-		for (int i = 0; i < getDim(); i++)
-		{
-			board[i].resize(getDim());
-		}
-		for (int i = 0; i < size(board); i++)
-		{
-			for (int j = 0; j < size(board); j++)
-			{
-				board[i][j] = '#';
-			}
-		}
-		setSecBoard(board);
-	}
-
-	void printBoard(vector<vector<char>> board)
+	void printBoard()
 	{
 		for (int i = 96; i < 107; i++)
 		{
@@ -66,7 +49,7 @@ public:
 			else cout << char(i) << endl;
 		}
 		int count = 1,row = 2;
-		for (auto i : board)
+		for (auto i : fboard)
 		{
 			for (auto j : i)
 			{
@@ -91,7 +74,6 @@ public:
 		else if (secBoard[x][y] == '#') board[x][y] = 'o';
 		else cout << "Unknown sign";
 		setBoard(board);
-		setSecBoard(secBoard);
 	}
 
 	bool isEnd(vector<vector<char>> secBoard)

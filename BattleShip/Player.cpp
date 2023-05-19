@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Board.cpp"
 
 using namespace std;
 
@@ -7,18 +8,17 @@ class Player
 {
 private:
 	string fname;
-	int fboardId;
 	bool fturn;
+	Board playerBoard;
 public:
-	Player(string name, int boardId, bool turn = false) : fname{ name }, fboardId{ boardId }, fturn{ turn }
+	Player(string name, Board board, bool turn = false) : fname{ name }, playerBoard { board }, fturn{ turn }
 	{}
 
-	int getBoardId(void) const { return fboardId; }
 	string getName(void) const { return fname; }
 	bool getTurn(void) const { return fturn; }
+	Board getPlayerBoard(void) const { return playerBoard; }
 
-	void setboardId(int boardId) { fboardId = boardId; }
 	void setName(string name) { fname = name; }
 	void setTurn(bool turn) { fturn = turn; }
-
+	void setPlayerBoard(Board board) { playerBoard = board; }
 };
