@@ -2,6 +2,8 @@
 #include <string>
 #include "Board.cpp"
 #include "Player.cpp"
+#include "BoardShips.cpp"
+#include "Ship.cpp"
 #include <windows.h>
 
 using namespace std;
@@ -16,6 +18,10 @@ void mainMenu()
     else cout << "Wrong syntax" << endl;
 }
 
+void showShipps() {
+
+}
+
 int main()
 {
     cout.flush();
@@ -24,18 +30,21 @@ int main()
     Board board1(0);
     Board board2(1);
 
-    Player player1("Bill", 0);
+    BoardShips boardShip(0);
+
+    Ship test(0, 4, 4, 1, 1);
+
+    boardShip.addShipp(test);
+    boardShip.showBoardShips();
+
+    Player player1("TheBill", 0);
     Player player2("Juliusz", 1);
 
-    vector<vector<char>> player1Board = board1.createBoard(board1.getBoard());
-    //vector<vector<char>> player2Board = board2.createBoard(board2.getBoard());
+    vector<vector<char>> player1Board = board1.getBoard();
+    vector<vector<char>> player2Board = board2.getBoard();
 
-    //cout << board1.getBoard()[0][0];
     board1.printBoard(player1Board);
-    player1Board[9][9] = 'X';
-    board1.setBoard(player1Board);
-    board1.printBoard(player1Board);
-    //board2.printBoard(player2Board);
+    board2.printBoard(player2Board);
 
     for (;;)
     {
