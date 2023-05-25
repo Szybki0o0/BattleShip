@@ -32,9 +32,10 @@ int main()
 
     BoardShips boardShip(0);
 
-    Ship test(0, 4, 4, 1, 1);
+    Ship test(0, 4, 5, 1, 1);
 
     boardShip.addShipp(test);
+    boardShip.changeFieldState(4, 5);
     boardShip.showBoardShips();
 
     Player player1("TheBill", 0);

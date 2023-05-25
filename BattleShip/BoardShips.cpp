@@ -53,6 +53,31 @@ public:
 		}
 	}
 
+	int getFieldState(int positionX, int positionY) {
+		return fboardShips[positionX][positionY];
+	}
+
+	bool isShipOnField(int positionX, int positionY) {
+
+		if (getFieldState(positionX, positionY) == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+
+		//return fboardShips[positionX][positionY] == 1 ? true : false;
+	}
+
+	void changeFieldState(int positionX, int positionY) {
+		if (isShipOnField(positionX, positionY)) {
+			fboardShips[positionX][positionY] = 2;
+		}
+		else {
+			fboardShips[positionX][positionY] = 3;
+		}
+	}
+
 	// For debug use
 	void showBoardShips() {
 		for (int i = 96; i < 107; i++)
