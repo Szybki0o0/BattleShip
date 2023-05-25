@@ -8,39 +8,58 @@ class Board
 private:
 	int fid{}, fdim{};
 	vector<vector<char>> fboard;
+	vector<vector<char>> fsecBoard;
 public:
-	Board(int id, int dim = 10) :
-	fid{ id }, fdim{ dim }, fboard{ createBoardField() }
+	Board(int id, vector<vector<char>> board = {}, vector<vector<char>> secBoard = {}, int dim = 10) : 
+	fid{ id }, fdim{ dim }, fboard{ board }, fsecBoard{ secBoard }
 	{}
 
 	int getId(void) const { return fid; }
 	int getDim(void) const { return fdim; }
-	vector<vector<char>> getBoardField(void) { return fboard; }
+	vector<vector<char>> getBoard(void) const { return fboard; }
+	vector<vector<char>> getSecBoard(void) const { return fsecBoard; }
 
 	void setId(int id) { fid = id; }
 	void setBoard(vector<vector<char>> board) { fboard = board; }
+	void setSecBoard(vector<vector<char>> secBoard) { fsecBoard = secBoard; }
 
-	vector<vector<char>> createBoardField()
+	vector<vector<char>> createBoard(vector<vector<char>> board)
 	{
-		vector<vector<char>> fboard;
-		fboard.resize(getDim());
-
+		board.resize(getDim());
 		for (int i = 0; i < getDim(); i++)
 		{
-			fboard[i].resize(getDim());
+			board[i].resize(getDim());
 		}
-		for (int i = 0; i < size(fboard); i++)
+		for (int i = 0; i < size(board); i++)
 		{
-			for (int j = 0; j < size(fboard); j++)
+			for (int j = 0; j < size(board); j++)
 			{
-				fboard[i][j] = 'Z';
+				board[i][j] = 'X';
 			}
 		}
-	
-		return fboard;
+		setBoard(board);
+		return board;
 	}
 
-	void printBoard()
+	vector<vector<char>> createSecBoard(vector<vector<char>> board)
+	{
+		board.resize(getDim());
+		for (int i = 0; i < getDim(); i++)
+		{
+			board[i].resize(getDim());
+		}
+		for (int i = 0; i < size(board); i++)
+		{
+			for (int j = 0; j < size(board); j++)
+			{
+				board[i][j] = '#';
+			}
+		}
+		setBoard(board);
+		return board;
+	}
+
+	void printBoard(vector<vector<char>> board)
 	{
 		for (int i = 96; i < 107; i++)
 		{
@@ -49,7 +68,7 @@ public:
 			else cout << char(i) << endl;
 		}
 		int count = 1,row = 2;
-		for (auto i : fboard)
+		for (auto i : board)
 		{
 			for (auto j : i)
 			{
@@ -68,23 +87,8 @@ public:
 		cout << "\n\n";
 	}
 
-	void changeMatrix(int x, int y, vector<vector<char>> board, vector<vector<char>> secBoard)
+	char whatsHappening(int x, int y, vector<vector<char>> board)
 	{
-		if (secBoard[x][y] == 'H') board[x][y] = 'X';
-		else if (secBoard[x][y] == '#') board[x][y] = 'o';
-		else cout << "Unknown sign";
-		setBoard(board);
-	}
 
-	bool isEnd(vector<vector<char>> secBoard)
-	{
-		for (auto i : secBoard)
-		{
-			for (auto j : i)
-			{
-				if (j == 'H') return false;
-			}
-		}
-		return true;
 	}
 };

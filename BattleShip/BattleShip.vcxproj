@@ -130,14 +130,12 @@
     <ClCompile Include="BattleShip.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipTypes.cpp" />
     <ClCompile Include="Threes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipTypes.h" />
     <ClInclude Include="Threes.h" />
   </ItemGroup>
