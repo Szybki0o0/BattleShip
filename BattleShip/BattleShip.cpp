@@ -49,8 +49,8 @@ int main()
 
 
 
-    //Ship ship(0, 5, 3, 1, 1);
-    //boardShip1.addShipp(test);
+    Ship ship(0, 0, 0, 4, 1);
+    boardShip2.addShip(ship);
     //boardShip1.changeFieldState(4, 5);
     //board1.changeFieldIcon(4, 5);
 
@@ -66,7 +66,7 @@ int main()
 
     for (;;)
     {
-        if (count < 20)
+        /*if (count < 20)
         {          
             cout << "Next ship: ";
             cin >> exp;
@@ -102,12 +102,15 @@ int main()
                 }
                 else { cout << err; }
                 boardShip2.showBoardShips();
-            }
             if (count == 1 || count == 3 || count == 6 || count == 11 || count == 13 || count == 16) { firstSize -= 1; }
+            }
         }
         else
-        {
-            /*if (player1.getTurn())
+        {*/
+            //if (boardShip1.isEnd()) { cout << player1.getName() << " has won!"; break; }
+            if (boardShip2.isEnd()) { cout << player2.getName() << " has won!"; break; }
+
+            if (player1.getTurn())
             {
                 boardShip1.showBoardShips();
                 board1.printBoard();
@@ -117,8 +120,10 @@ int main()
                 cin >> exp; cout << "\n";
                 if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; }
                 else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                else { cout << "Wrong Input!!!\n\n"; player2.setTurn(false); player1.setTurn(true); }
-
+                else { cout << err; player1.setTurn(true); player2.setTurn(false); continue; }
+                if (boardShip2.isShipOnField(x, y)) { player1.setTurn(true); player2.setTurn(false); }
+                boardShip2.changeFieldState(x, y);
+                board1.changeFieldIcon(x, y);
             }
 
             if (player2.getTurn())
@@ -131,10 +136,13 @@ int main()
                 cin >> exp; cout << "\n";
                 if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; }
                 else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                else { cout << "Wrong Input!!!\n\n"; player1.setTurn(false); player2.setTurn(true); }
-            }*/
+                else { cout << err; player1.setTurn(false); player2.setTurn(true); continue; }
+                if (boardShip1.isShipOnField(x, y)) { player1.setTurn(false); player2.setTurn(true); }
+                boardShip1.changeFieldState(x, y); 
+                board2.changeFieldIcon(x, y);
+            }
 
-        }
+        //}
 
         
         if(GetAsyncKeyState(VK_ESCAPE))
