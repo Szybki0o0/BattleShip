@@ -1,5 +1,8 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
+#include "BoardShips.cpp"
 
 using namespace std;
 
@@ -8,9 +11,10 @@ class Board
 private:
 	int fid{}, fdim{};
 	vector<vector<char>> fboard;
+	BoardShips fboardShip;
 public:
-	Board(int id, vector<vector<char>> board = {}, int dim = 10) : 
-	fid{ id }, fdim{ dim }, fboard{ createBoard() }
+	Board(int id, BoardShips boardShip, vector<vector<char>> board = {}, int dim = 10) :
+		fid{ id }, fdim{ dim }, fboard{ createBoard() }, fboardShip{ boardShip }
 	{}
 
 	int getId(void) const { return fid; }
@@ -33,13 +37,22 @@ public:
 		{
 			for (int j = 0; j < size(board); j++)
 			{
-				board[i][j] = 'X';
+				board[i][j] = '#';
 			}
 		}
 		return board;
 	}
 
-	void printBoard(vector<vector<char>> board)
+	void changeFieldIcon(int positionX, int positionY) {
+		if (fboardShip.isShipOnField(positionX, positionY)) {
+			fboard[positionX][positionY] = 'X';
+		}
+		else {
+			fboard[positionX][positionY] = 'o';
+		}
+	}
+
+	void printBoard()
 	{
 		for (int i = 96; i < 107; i++)
 		{
@@ -48,7 +61,7 @@ public:
 			else cout << char(i) << endl;
 		}
 		int count = 1,row = 2;
-		for (auto i : board)
+		for (auto i : fboard)
 		{
 			for (auto j : i)
 			{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Ship.h"
 
 using namespace std;
 
@@ -28,3 +29,4 @@ public:
 	void setSizeY(int sizeY) { fsizeY = sizeY; }
 
 };
+

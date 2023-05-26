@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include "Ship.cpp"
@@ -40,7 +42,7 @@ public:
 		return board;
 	}
 
-	void addShipp(Ship ship) {
+	void addShip(Ship ship) {
 		int shippStartPositionX = ship.getPositionX();
 		int shippStartPositionY = ship.getPositionY();
 
@@ -76,6 +78,18 @@ public:
 		else {
 			fboardShips[positionX][positionY] = 3;
 		}
+	}
+
+	bool isEnd()
+	{
+		for (auto i : fboardShips)
+		{
+			for (auto j : i)
+			{
+				if (j == 1) return false;
+			}
+		}
+		return true;
 	}
 
 	// For debug use

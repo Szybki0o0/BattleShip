@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 
@@ -15,8 +17,10 @@ public:
 
 	int getBoardId(void) const { return fboardId; }
 	string getName(void) const { return fname; }
+	bool getTurn(void) const { return fturn; }
 
 	void setboardId(int boardId) { fboardId = boardId; }
 	void setName(string name) { fname = name; }
+	void setTurn(bool turn) { fturn = turn; }
 
 };
