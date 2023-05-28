@@ -16,13 +16,14 @@ public:
 		fid{ id }, fdim{ dim }, fboardShips{ createBoardShips() }
 	{}
 
+	// gets and sets
 	int getId(void) const { return fid; }
 	int getDim(void) const { return fdim; }
 	vector<vector<int>> getBoardShips(void) const { return fboardShips; }
 
 	void setId(int id) { fid = id; }
 
-	vector<vector<int>> createBoardShips()
+	vector<vector<int>> createBoardShips() // creating board scheme
 	{
 		vector<vector<int>> board;
 
@@ -42,7 +43,7 @@ public:
 		return board;
 	}
 
-	void addShip(Ship ship) {
+	void addShip(Ship ship) { // adding ships to vector
 		int shippStartPositionX = ship.getPositionX();
 		int shippStartPositionY = ship.getPositionY();
 
@@ -55,23 +56,21 @@ public:
 		}
 	}
 
-	int getFieldState(int positionX, int positionY) {
+	int getFieldState(int positionX, int positionY) { // getting whats on field
 		return fboardShips[positionX][positionY];
 	}
 
-	bool isShipOnField(int positionX, int positionY) {
+	bool isShipOnField(int positionX, int positionY) { // checking whats on the field
 
-		if (getFieldState(positionX, positionY) == 1) {
+		if (getFieldState(positionX, positionY) == 1 || getFieldState(positionX, positionY) == 2) {
 			return true;
 		}
 		else {
 			return false;
 		}
-
-		//return fboardShips[positionX][positionY] == 1 ? true : false;
 	}
 
-	void changeFieldState(int positionX, int positionY) {
+	void changeFieldState(int positionX, int positionY) { // changing state of logic board
 		if (isShipOnField(positionX, positionY)) {
 			fboardShips[positionX][positionY] = 2;
 		}
@@ -80,7 +79,7 @@ public:
 		}
 	}
 
-	bool isEnd()
+	bool isEnd() // checking if logic board is empty of ships
 	{
 		for (auto i : fboardShips)
 		{
@@ -92,8 +91,7 @@ public:
 		return true;
 	}
 
-	// For debug use
-	void showBoardShips() {
+	void showBoardShips() { // printing board
 		for (int i = 96; i < 107; i++)
 		{
 			if (i == 96) cout << "   ";

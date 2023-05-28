@@ -17,14 +17,17 @@ public:
 		fid{ id }, fdim{ dim }, fboard{ createBoard() }, fboardShip{ boardShip }
 	{}
 
+	// gets and sets
 	int getId(void) const { return fid; }
 	int getDim(void) const { return fdim; }
+	BoardShips getBoardShip(void) const { return fboardShip; }
 	vector<vector<char>> getBoard(void) const { return fboard; }
 
 	void setId(int id) { fid = id; }
+	void setBoardShip(BoardShips boardShip) { fboardShip = boardShip; }
 	void setBoard(vector<vector<char>> board) { fboard = board; }
 
-	vector<vector<char>> createBoard()
+	vector<vector<char>> createBoard() // creating board scheme
 	{
 		vector<vector<char>> board;
 
@@ -43,7 +46,7 @@ public:
 		return board;
 	}
 
-	void changeFieldIcon(int positionX, int positionY) {
+	void changeFieldIcon(int positionX, int positionY) { // changing icon of game board
 		if (fboardShip.isShipOnField(positionX, positionY)) {
 			fboard[positionX][positionY] = 'X';
 		}
@@ -52,7 +55,7 @@ public:
 		}
 	}
 
-	void printBoard()
+	void printBoard() // printing board
 	{
 		for (int i = 96; i < 107; i++)
 		{

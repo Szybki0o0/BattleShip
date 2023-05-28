@@ -1,4 +1,4 @@
-#pragma once
+#pragma once // preventing from multiple inclusion of the source code while compiling
 
 #include <iostream>
 #include <string>
@@ -10,23 +10,18 @@
 
 using namespace std;
 
-void mainMenu()
+void mainMenu() // information panel
 {
-    string value;
-    cout << "To start the game enter start \nTo end programme enter end" << endl;
-    cin >> value;
-    if (value == "start") cout << "placeholder\n";
-    else if (value == "end") exit(0);
-    else cout << "Wrong syntax" << endl;
+    cout << "To start the game press space \nTo end programme press esc" << endl;
 }
 
-Ship verticalPlacement(int x, int y, int count,int firstSize,int secondSize)
+Ship verticalPlacement(int x, int y, int count,int firstSize,int secondSize) // creating Ship class object more conviniently
 {
     Ship ship(count, x, y, firstSize, secondSize);
     return ship;
 }
 
-Ship horizontalPlacement(int x, int y, int count, int firstSize, int secondSize)
+Ship horizontalPlacement(int x, int y, int count, int firstSize, int secondSize) // creating Ship class object more conviniently
 {
     Ship ship(count, x, y, secondSize, firstSize);
     return ship;
@@ -34,122 +29,125 @@ Ship horizontalPlacement(int x, int y, int count, int firstSize, int secondSize)
 
 int main()
 {
-    //bool isPrePhase = true;
+    // used variables in main loop
+    mainMenu();
+    bool isStart = false;
     int count = 0, firstSize = 4, secondSize = 1;
     string exp;
     string err = "Wrong Input!!!\n\n";
+    string ofr = "Input out of range!!!\n\n";
     int x{}, y{};
-    //mainMenu();
 
+    // creation of two board for two players
     BoardShips boardShip1(0);
-    Board board1(0,boardShip1);
+    Board board1(0, boardShip1);
 
     BoardShips boardShip2(1);
-    Board board2(1,boardShip2);
+    Board board2(1, boardShip2);
 
-
-
-    Ship ship(0, 0, 0, 4, 1);
-    boardShip2.addShip(ship);
-    //boardShip1.changeFieldState(4, 5);
-    //board1.changeFieldIcon(4, 5);
-
+    // Creation of two players
     Player player1("TheBill", 0);
     Player player2("Juliusz", 1);
-
-    //vector<vector<char>> player1Board = board1.getBoard();
-    //vector<vector<char>> player2Board = board2.getBoard();
-
-    //board1.printBoard();
-    //board2.printBoard();
+    
+    // seting first turn for player1
     player1.setTurn(true);
 
+    // main loop of the program
     for (;;)
     {
-        /*if (count < 20)
-        {          
-            cout << "Next ship: ";
-            cin >> exp;
-            if (count == 10) { firstSize = 4; }
-            if (count < 10) {
-                if (size(exp) == 4 && exp[1] == '1') {                
-                    x = 9; y = int(exp[0]) - 97; 
-                    if (exp[3] == 'v') { boardShip1.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else if (exp[3] == 'h') { boardShip1.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else { cout << err; continue; }
+        if (isStart) // checking if user went out of the main menu
+        {
+            if (count == 10) { firstSize = 4; board2.setBoardShip(boardShip1); } // updating logic board to Board class
+            if (count == 20) { board1.setBoardShip(boardShip2); }
+            if (count < 20) // checking if the preparation phase has ended
+            {
+                cout << "Next ship: "; // taking expresion from players
+                cin >> exp;
+                if (count < 10) { // filling board for player1
+                    if (size(exp) == 4 && exp[2] == '0' && exp[1] == '1') { // longer expresion condition if number is 10
+                        x = 9; y = int(exp[0]) - 97; // prep x y cords
+                        if (exp[3] == 'v' && x + firstSize <= 10) { boardShip1.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed vertically and correctly
+                        else if (exp[3] == 'h' && y + firstSize <= 10) { boardShip1.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed horizontally and correctly
+                        else { cout << err; continue; } // exeption handling
+                    }
+                    else if (size(exp) == 3) { // shorter expresion  if number is one digit
+                        y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; // prep x y cords
+                        if (exp[2] == 'v' && x + firstSize <= 10 && y < 10 && x < 10 && y >= 0 && x >= 0) { boardShip1.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed vertically and correctly
+                        else if (exp[2] == 'h' && y + firstSize <= 10 && y < 10 && x < 10 && y >= 0 && x >= 0) { boardShip1.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed horizontally and correctly
+                        else { cout << err; continue; } // exeption handling
+                    }
+                    else { cout << err; continue; } // exeption handling
+                    boardShip1.showBoardShips(); // printing current board state
                 }
-                else if (size(exp) == 3) { 
-                    y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; 
-                    if (exp[2] == 'v') { boardShip1.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else if (exp[2] == 'h') { boardShip1.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else { cout << err; continue; }
+                else { // filling board for player2
+                    if (size(exp) == 4 && exp[2] == '0' && exp[1] == '1') { // longer expresion condition if number is 10
+                        x = 9; y = int(exp[0]) - 97; // prep x y cords
+                        if (exp[3] == 'v' && x + firstSize <= 10) { boardShip2.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed vertically and correctly
+                        else if (exp[3] == 'h' && y + firstSize <= 10) { boardShip2.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed horizontally and correctly
+                        else { cout << err; continue; } // exeption handling
+                    }
+                    else if (size(exp) == 3) { // shorter expresion  if number is one digit
+                        y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; // prep x y cords
+                        if (exp[2] == 'v' && x + firstSize <= 10 && y < 10 && x < 10 && y >= 0 && x >= 0) { boardShip2.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed vertically and correctly
+                        else if (exp[2] == 'h' && y + firstSize <= 10 && y < 10 && x < 10 && y >= 0 && x >= 0) { boardShip2.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; } // checking if ship is placed horizontally and correctly
+                        else { cout << err; continue; } // exeption handling
+                    }
+                    else { cout << err; continue; } // exeption handling
+                    boardShip2.showBoardShips(); // printing current board state
                 }
-                else { cout << err; }
-                boardShip1.showBoardShips();
+                if (count == 1 || count == 3 || count == 6 || count == 11 || count == 13 || count == 16) { firstSize -= 1; } // updating ship size
             }
-            else {
-                if (size(exp) == 4 && exp[1] == '1') {
-                    x = 9; y = int(exp[0]) - 97;
-                    if (exp[3] == 'v') { boardShip2.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else if (exp[3] == 'h') { boardShip2.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else { cout << err; continue; }
+            else
+            {
+                // cheking if someone has won
+                if (boardShip1.isEnd()) { cout << player2.getName() << " has won!"; break; }
+                if (boardShip2.isEnd()) { cout << player1.getName() << " has won!"; break; }
+
+                // gameplay module and turn system
+                if (player1.getTurn())
+                {
+                    board1.printBoard(); // printing current board state
+                    player1.setTurn(false); // changing turn
+                    player2.setTurn(true);
+                    cout << player1.getName() << " guess: "; // taking expresion from player
+                    cin >> exp; cout << "\n";
+                    if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; } // longer expresion condition if number is 10
+                    else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; } // shorter expresion  if number is one digit
+                    else { cout << err; player1.setTurn(true); player2.setTurn(false); continue; } // exeption handling
+                    if (boardShip2.isShipOnField(x, y)) { player1.setTurn(true); player2.setTurn(false); } // cheching if hit
+                    board1.changeFieldIcon(x, y); // updating game board
+                    boardShip2.changeFieldState(x, y); // updating logic board
                 }
-                else if (size(exp) == 3) {
-                    y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1;
-                    if (exp[2] == 'v') { boardShip2.addShip(verticalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else if (exp[2] == 'h') { boardShip2.addShip(horizontalPlacement(x, y, count, firstSize, secondSize)); count++; }
-                    else { cout << err; continue; }
+
+                if (player2.getTurn())
+                {
+                    board2.printBoard(); // printing current board state
+                    player1.setTurn(true); // changing turn
+                    player2.setTurn(false);
+                    cout << player2.getName() << " guess: "; // taking expresion from players
+                    cin >> exp; cout << "\n";
+                    if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; } // longer expresion condition if number is 10
+                    else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; } // shorter expresion  if number is one digit
+                    else { cout << err; player1.setTurn(false); player2.setTurn(true); continue; } // exeption handling
+                    if (boardShip1.isShipOnField(x, y)) { player1.setTurn(false); player2.setTurn(true); } // cheching if hit
+                    board2.changeFieldIcon(x, y); // updating game board
+                    boardShip1.changeFieldState(x, y); // updating logic board
                 }
-                else { cout << err; }
-                boardShip2.showBoardShips();
-            if (count == 1 || count == 3 || count == 6 || count == 11 || count == 13 || count == 16) { firstSize -= 1; }
+
             }
         }
-        else
-        {*/
-            //if (boardShip1.isEnd()) { cout << player1.getName() << " has won!"; break; }
-            if (boardShip2.isEnd()) { cout << player2.getName() << " has won!"; break; }
 
-            if (player1.getTurn())
-            {
-                boardShip1.showBoardShips();
-                board1.printBoard();
-                player1.setTurn(false);
-                player2.setTurn(true);
-                cout << player1.getName() << " guess: ";
-                cin >> exp; cout << "\n";
-                if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; }
-                else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                else { cout << err; player1.setTurn(true); player2.setTurn(false); continue; }
-                if (boardShip2.isShipOnField(x, y)) { player1.setTurn(true); player2.setTurn(false); }
-                boardShip2.changeFieldState(x, y);
-                board1.changeFieldIcon(x, y);
-            }
-
-            if (player2.getTurn())
-            {
-                boardShip2.showBoardShips();
-                board2.printBoard();
-                player1.setTurn(true);
-                player2.setTurn(false);
-                cout << player2.getName() << " guess: ";
-                cin >> exp; cout << "\n";
-                if (size(exp) == 3 && exp[1] == '1') { x = 9; y = int(exp[0]) - 97; }
-                else if (size(exp) == 2) { y = int(exp[0]) - 97; x = int(exp[1] - '0') - 1; }
-                else { cout << err; player1.setTurn(false); player2.setTurn(true); continue; }
-                if (boardShip1.isShipOnField(x, y)) { player1.setTurn(false); player2.setTurn(true); }
-                boardShip1.changeFieldState(x, y); 
-                board2.changeFieldIcon(x, y);
-            }
-
-        //}
-
-        
-        if(GetAsyncKeyState(VK_ESCAPE))
+        if (GetAsyncKeyState(VK_ESCAPE)) // cheking if esc has been pressed
         {
-            //cout << "ESCAPE-PRESSED" << endl;
-            //mainMenu();
+            exit(0);
+            Sleep(500);
+        }
+
+        if (GetAsyncKeyState(VK_SPACE)) // cheking if space has been pressed
+        {
+            isStart = true;
             Sleep(500);
         }
     }
+
 }

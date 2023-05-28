@@ -15,6 +15,7 @@ public:
 		fid{ id }, fpositionX{ positionX }, fpositionY{ positionY }, fsizeX{ sizeX }, fsizeY{ sizeY }
 	{}
 
+	// gets and sets
 	int getId(void) const { return fid; }
 	int getPositionX(void) const { return fpositionX; }
 	int getPositionY(void) const { return fpositionY; }
